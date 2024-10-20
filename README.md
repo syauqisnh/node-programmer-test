@@ -8,7 +8,7 @@ Teknologi:
 Tutorial Instalasi
 - Npm Install
 
-API Module Membership: table users (GET, POST, PUT)
+API Module Membership: table Users (GET, POST, PUT)
 
 API Module Information: table Banner (GET), table Service(GET)
 
