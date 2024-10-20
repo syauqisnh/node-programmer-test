@@ -212,7 +212,7 @@ const profileImg = async (req, res) => {
 
         const email = req.user.id;
         const profileImagePath = req.file.path;
-        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/images/${req.file.filename}`; // URL gambar
+        const imageUrl = `${req.protocol}://${req.get('host')}/uploads/images/${req.file.filename}`;
 
         console.log("Profile image path:", profileImagePath);
         console.log("User email:", email);
@@ -222,13 +222,21 @@ const profileImg = async (req, res) => {
         
         if (oldResult.length > 0) {
             const oldImageUrl = oldResult[0].profile_image;
-            const oldImagePath = path.join(process.cwd(), 'uploads/images', path.basename(oldImageUrl));
 
-            fs.unlink(oldImagePath, (err) => {
-                if (err) {
-                    console.error("File gambar profil harus diupload", err);
-                }
-            });
+            // Hanya hapus gambar lama jika oldImageUrl valid
+            if (oldImageUrl) {
+                const oldImagePath = path.join(process.cwd(), 'uploads/images', path.basename(oldImageUrl));
+
+                fs.unlink(oldImagePath, (err) => {
+                    if (err) {
+                        console.error("Error deleting old profile image:", err);
+                    } else {
+                        console.log("Old profile image deleted successfully.");
+                    }
+                });
+            } else {
+                console.log("No old image to delete.");
+            }
         }
 
         const query = `UPDATE users SET profile_image = ? WHERE email = ?`;
