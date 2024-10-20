@@ -223,7 +223,6 @@ const profileImg = async (req, res) => {
         if (oldResult.length > 0) {
             const oldImageUrl = oldResult[0].profile_image;
 
-            // Hanya hapus gambar lama jika oldImageUrl valid
             if (oldImageUrl) {
                 const oldImagePath = path.join(process.cwd(), 'uploads/images', path.basename(oldImageUrl));
 
